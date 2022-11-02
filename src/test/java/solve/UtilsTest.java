@@ -9,8 +9,9 @@ import solve.models.Cube;
 import solve.models.Cylinder;
 import solve.models.Shape;
 
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 
@@ -28,20 +29,32 @@ class UtilsTest {
     }
 
     static Stream<Arguments> setListForTopTagTest() {
+        Map<String, Long> test1 = new HashMap<>();
+        test1.put("#like", 2L);
+        test1.put("#cool", 2L);
+        Map<String, Long> test2 = new HashMap<>();
+        test2.put("#friend", 2L);
+        test2.put("#girl", 2L);
+        test2.put("#mom", 2L);
+        test2.put("#love", 2L);
+        test2.put("#best", 2L);
+        Map<String, Long> test3 = new HashMap<>();
+        test3.put("#friend", 1L);
+        test3.put("#myself", 1L);
         return Stream.of(
                 Arguments.arguments(
-                        Arrays.asList("#like", "#cool"),
-                        Arrays.asList(
+                        test1,
+                        List.of(
                                 "I #like my mom, because she's #cool cook",
                                 "I #like my dad, because he's #cool drive")
                 ),
                 Arguments.arguments(
-                        Arrays.asList("#friend", "#girl", "#mom", "#love", "#best"),
-                        Arrays.asList("#best", "#friend", "#best", "#girl", "#mom", "#mom", "#friend", "#love", "#girl", "#love", "#cool")
+                        test2,
+                        List.of("#best", "#friend", "#best", "#girl", "#mom", "#mom", "#friend", "#love", "#girl", "#love", "#cool")
                 ),
                 Arguments.arguments(
-                        Arrays.asList("#friend", "#myself"),
-                        Arrays.asList("hello my #friend", "I love #myself")
+                        test3,
+                        List.of("hello my #friend", "I love #myself")
                 )
         );
     }
@@ -69,8 +82,8 @@ class UtilsTest {
 
     @ParameterizedTest
     @MethodSource("setListForTopTagTest")
-    void getTopTagByRowList(List<String> expect, List<String> result) {
-        Assertions.assertArrayEquals(expect.toArray(), Utils.getTopTagByRowList(result).toArray());
+    void getTopTagByRowList(Map<String, Long> expect, List<String> result) {
+        Assertions.assertEquals(expect, Utils.getTopTagByRowList(result));
 
     }
 
