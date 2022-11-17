@@ -12,7 +12,7 @@ public class Circle extends Shape {
 
     @Override
     public double getVolume() {
-        return 4 * Math.PI * Math.pow(radius, 2);
+        return 4.\3 * Math.PI * Math.pow(radius, 3);
     }
 
     public void setRadius(double radius) {
